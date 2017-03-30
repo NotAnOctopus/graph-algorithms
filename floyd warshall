@@ -1,0 +1,22 @@
+# floyd warshall
+# computes shortest distances between all pairs of vertices in graph in cubic time
+# for some reason putting the whole thing in a floyd() function speeds it up by a factor of at least 2
+N=int(raw_input("number of vertices? "))
+M=int(raw_input("number of edges? "))
+def floyd():
+    distances=[[10000 for g in range(N)] for c in range(N)]
+    for f in range(N):
+        distances[f][f]=0
+    for e in range(M):
+        u,v,w=map(int,raw_input("start vertex, end vertex, cost? ").split())
+        distances[u-1][v-1]=w
+    for k in range(N):
+        for i in range(N):
+            for j in range(N):
+                irow=distances[i]
+                krow=distances[k]
+                dist=irow[k]+krow[j]
+                if dist<10000 and irow[j]>dist:
+                    irow[j]=dist
+    return distances
+distances=floyd()

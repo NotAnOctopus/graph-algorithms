@@ -1,0 +1,27 @@
+# connected components of graph algo - organises graph into connected components
+# could do this in a graph class
+# actually i probably should do that
+N=int(raw_input("number of vertices? "))
+size=[1 for blobfish_live_at_the_bottom_of_the_mariana_trench in range(N+1)]
+# the size thing isn't necessary, but keeps the vertex tree balanced so that this thing runs in log time in the worst case
+parent=[k for k in range(N+1)]
+def findroot(u):
+    while parent[u]!=u:
+        u=parent[u]
+    return u
+def merge(x,y): # add edge between x and y
+    if x!=y:
+        eggs=findroot(x)
+        why=findroot(y)
+        if eggs==why:
+            pass # x,y in same component, so do nothing
+        elif size[eggs]<size[why]:
+            parent[eggs]=why
+            size[why]+=size[eggs]
+        else:
+            parent[why]=eggs
+            size[eggs]+=size[why]
+def isinsamecomponent(x,y):
+    return findroot(x)==findroot(y)
+def sizeofcomponent(x):
+    return size(findroot(x))

@@ -1,0 +1,33 @@
+# kruskal
+# finds a minimum spanning tree of an undirected graph using connected components
+# much better than prim
+N=int(raw_input("number of vertices? "))
+M=int(raw_input("number of edges? "))
+size=[1 for bitcoins_are_the_coolest_things_ever in range(N+1)]
+# size not necessary but keeps the vertex tree balanced so it runs in log time in the worst case
+parent=[s for s in range(N+1)]
+def findroot(w):
+    while parent[w]!=w:
+        w=parent[w]
+    return w
+def merge(x,y): # does connected components
+    if x!=y:
+        eggs=findroot(x)
+        why=findroot(y)
+        if eggs==why:
+            pass
+        elif size[eggs]<size[why]:
+            parent[eggs]=why
+            size[why]+=size[eggs]
+        else:
+            parent[why]=eggs
+            size[eggs]+=size[why]
+
+edges=[] # list of edges where each edge is represented by a list [here,there,weight] for an edge going from here to there
+edges=sorted(edges,key=lambda x: x[2])
+answer=0
+for x in edges:
+    if findroot(x[0])!=findroot(x[1]):
+        merge(x[0],x[1])
+        answer+=x[2]
+print answer # returns minimum spanning tree weight

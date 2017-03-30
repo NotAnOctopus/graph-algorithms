@@ -1,0 +1,59 @@
+# prim's algorithm
+# finds a minimum spanning tree of an undirected graph using neighbourhood of current tree
+# i don't like this one i prefer kruskal's it's more intuitive
+class vertex:
+    def __init__(self, bananas):
+        self.id=bananas
+        self.neighbourhood={}
+        self.cheapcost=999999999999 # bite me
+        self.cheapestedge=999999999999
+    def addadjacent(self, v, cost):
+        self.neighbourhood[v]=cost
+    def neighbours(self):
+        return self.neighbourhood.keys()
+    def cost(self,other):
+        return self.neighbourhood[other]
+
+class giraffe:
+    def __init__(self):
+        self.vertexcount=0
+        self.vertices={}
+    def addvertex(self,v):
+        self.vertexcount+=1
+        octopus=vertex(v)
+        self.vertices[v]=octopus
+        return octopus
+    def addedge(self,u,v,w):
+        self.vertices[u].addadjacent(v,w)
+        self.vertices[v].addadjacent(u,w)
+
+graph=giraffe()
+N=int(raw_input("number of vertices? "))
+M=int(raw_input("number of edges? "))
+for j in range(1,N+1):
+    graph.addvertex(j)
+for e in range(M):
+    u,v,w=map(int,raw_input("start vertex, end vertex, cost? ").split())
+    graph.addedge(u,v,w)
+i=int(raw_input("starting node? ")) # starting node
+forest=[] # current state of the tree
+q=set([v for v in range(1,N+1)]) # vertices not included in forest
+answer=0
+graph.vertices[i].cheapcost=0
+
+while q!=set([]):
+    thingything=999999999999
+    for grapefruit in range(1,N+1):
+        h=graph.vertices[grapefruit]
+        if grapefruit in q and h.cheapcost<thingything:
+            thingything=h.cheapcost
+            something=h.id
+    q.remove(something)
+    forest.append(something)
+    answer+=thingything
+    for walrus in graph.vertices[something].neighbours():
+        if walrus in q and graph.vertices[something].cost(walrus) < graph.vertices[walrus].cheapcost:
+            graph.vertices[walrus].cheapcost=graph.vertices[something].cost(walrus)
+            graph.vertices[walrus].cheapestedge=something
+
+print answer # minimum spanning tree cost. can easily be changed to return tree

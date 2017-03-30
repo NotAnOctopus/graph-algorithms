@@ -1,0 +1,37 @@
+# topological sort: given a directed graph, determine whether you can sort the vertices such that if a->b then a appears before b.
+# equivalent to determining whether a directed graph has a cycle or not
+# returns topologically sorted list if it exists, otherwise false
+
+class Vertex:
+    def __init__(self,id):
+        self.id=id
+        self.goingout=set([])
+        self.comingin=set([])
+class Graph:
+    def __init__(self,v):
+        self.vertices=[Solution.Vertex(i) for i in range(v)]
+        self.edgecount=0
+    def addedge(self,a,b):
+        self.vertices[a].goingout.add(b)
+        self.vertices[b].comingin.add(a)
+        self.edgecount+=1
+    def removeedge(self,a,b):
+        self.vertices[a].goingout.remove(b)
+        self.vertices[b].comingin.remove(a)
+        self.edgecount-=1
+
+def toposort(vertexcount, edges):
+    # edges is a list of edges where each edge is a two element list
+    g=self.Graph(vertexcount)
+    for i in edges:
+        g.addedge(i[0],i[1])
+    S=set([thing.id for thing in g.vertices if thing.comingin==set([])])
+    L=[]
+    while S:
+        bananas=S.pop()
+        L.append(bananas)
+        for apples in g.vertices[bananas].goingout.copy():
+            g.removeedge(bananas,apples)
+            if g.vertices[apples].comingin==set([]):
+                S.add(apples)
+    return L if g.edgecount==0 else False
